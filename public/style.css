@@ -1,0 +1,77 @@
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid black;
+    border-radius: 1rem;
+    width: 700px;
+    min-height: 560px;
+    margin: 120px auto;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 48px;
+    color: #010d2e;
+    padding: 16px 0 32px 0;
+}
+
+input:not([type="checkbox"]) {
+    border: 1px solid #b2b2b2;
+    border-radius: 20px;
+    padding: 12px;
+    width: 15rem;
+    background-color: #af999911;
+}
+
+button {
+    background-color: green;
+    width: 100% !important;
+    color: #fff;
+    border: 1px solid #b2b2b2;
+    border-radius: 20px;
+    padding: 12px;
+    width: 15rem;
+}
+
+.mb-s {
+    margin-bottom: 8px;
+}
+
+.mb-m {
+    margin-bottom: 22px;
+}
+
+.link__create-account {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+a {
+    text-decoration: none;
+    color: #666;
+}
+
+a:hover {
+    color: green;
+    transition: all .4s;
+}
