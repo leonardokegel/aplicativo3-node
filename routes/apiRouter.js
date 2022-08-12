@@ -30,7 +30,8 @@ apiRouter.get('/clientes/:id_cliente', express.json(), function (req, res) {
                 res.status(200).json(cliente[0])
             } else {
                 res.status(404).json({
-                    message: `cliente não encontrado!`
+                    message: `cliente não encontrado!`,
+                    statusCode: 404
                 });
             }
         })
@@ -41,10 +42,13 @@ apiRouter.get('/clientes/:id_cliente', express.json(), function (req, res) {
         });
 });
 
-apiRouter.post('/clientes', express.json(), function (req, res) {
+
+apiRouter.post('/clientes/:id_cliente', express.json(), function (req, res) {
+    let id_cliente = req.params.id_cliente;
     if (validaBody(req, res)) {
         knex('clientes')
             .insert({
+                id: id_cliente,
                 nome: req.body.nome,
                 telefone: req.body.telefone,
                 email: req.body.email,
@@ -78,7 +82,8 @@ apiRouter.delete('/clientes/:id_cliente', express.json(), function (req, res) {
                 });
             } else {
                 res.status(404).json({
-                    message: 'cliente não encontrado!'
+                    message: 'cliente não encontrado!',
+                    statusCode: 404
                 });
             }
         })
@@ -93,29 +98,29 @@ apiRouter.put('/clientes/:id_cliente', express.json(), function (req, res) {
     let id_cliente = +req.params.id_cliente;
     if (validaBody(req, res)) {
         knex('clientes')
-        .where({ id: id_cliente })
-        .update({
-            nome: req.body.nome,
-            telefone: req.body.telefone,
-            email: req.body.email,
-            sexo: req.body.sexo,
-            estado: req.body.estado,
-            cidade: req.body.cidade
-        }, ['id', 'nome', 'telefone', 'email', 'sexo', 'estado', 'cidade'])
-        .then((cliente) => {
-            if (cliente.length > 0) {
-                res.status(204).json({});
-            } else {
-                res.status(404).json({
-                    message: 'cliente não encontrado!'
+            .where({ id: id_cliente })
+            .update({
+                nome: req.body.nome,
+                telefone: req.body.telefone,
+                email: req.body.email,
+                sexo: req.body.sexo,
+                estado: req.body.estado,
+                cidade: req.body.cidade
+            }, ['id', 'nome', 'telefone', 'email', 'sexo', 'estado', 'cidade'])
+            .then((cliente) => {
+                if (cliente.length > 0) {
+                    res.status(204).json({});
+                } else {
+                    res.status(404).json({
+                        message: 'cliente não encontrado!'
+                    });
+                }
+            })
+            .catch((err) => {
+                res.status(500).json({
+                    message: `Erro ao recuperar os clientes, ${err.message}`
                 });
-            }
-        })
-        .catch((err) => {
-            res.status(500).json({
-                message: `Erro ao recuperar os clientes, ${err.message}`
             });
-        });
     } else {
         res.end();
     }

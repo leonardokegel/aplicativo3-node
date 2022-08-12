@@ -11,7 +11,7 @@
     <script type="text/javascript" src="main.js"></script>
 </head>
 
-<body>
+<body onload="onLoadHome()">
     <section class="login">
         <div>
             <img src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png">
@@ -22,11 +22,11 @@
                 <div>
                     <div class="mb-s">
                         <!-- <label for="login">Login</label> -->
-                        <input id="login" type="text" name="login" placeholder="Login" required>
+                        <input id="loginHome" type="text" name="login" placeholder="Login" required>
                     </div>
                     <div class="mb-m">
                         <!-- <label for="senha">Senha</label> -->
-                        <input id="senha" type="password" name="senha" placeholder="Senha" required>
+                        <input id="senhaHome" type="password" name="senha" placeholder="Senha" required>
                     </div>
                 </div>
                 <div>
@@ -35,6 +35,7 @@
                 <div class="link__create-account">
                     <a href="./cadastro.html">Create Your Account</a>
                 </div>
+                <p style="color: red; text-align: center" id="erroLogin"></p>
             </form>
         </div>
     </section>
