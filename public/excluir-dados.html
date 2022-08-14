@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeJS</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="main.js"></script>
+</head>
+
+<body>
+    <section class="login">
+        <div>
+            <img src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png">
+        </div>
+        <div class="main__content">
+            <div>
+                <h1>Excluir Dados</h1>
+                <h2 style="text-align: center;">Você deseja excluir seus dados cadastrais?</h2>
+                <div style="width: 12rem; margin-left: 9rem;">
+                    <button onclick="excluirDados()" style="margin-top: 2rem;">Sim, excluir.</button>
+                    <button onclick="backToHome()" style="margin: 1rem 0 1rem 0;">Não, voltar para consulta.</button>
+                </div>
+                <div>
+                    <p style="color: green; text-align: center" id="mensagemSucesso"></p>
+                    <p style="color: red; text-align: center" id="mensagemErro"></p>
+                </div>
+            </div>
+            <div style="margin-left: 4rem;" id="goto" class="links">
+                <h3>Ir para</h3>
+                <a style="padding-left: 1rem; text-decoration: underline; color: blue; font-weight: bold;"
+                    href="/home">Login</a>
+                <a style="padding-left: 1rem; text-decoration: underline; color: blue; font-weight: bold;"
+                    href="/home/consulta.html">Consultar Dados</a>
+            </div>
+        </div>
+
+    </section>
+
+</body>
+
+</html>

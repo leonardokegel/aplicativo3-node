@@ -1,4 +1,5 @@
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const apiRouter = express.Router();
 const knex = require('knex')({
@@ -11,6 +12,31 @@ const knex = require('knex')({
     }
 });
 
+let checkToken = (req, res, next) => {
+    let authToken = req.headers["authorization"];
+    if (!authToken) {
+        res.status(401).json({
+            message: 'token de acesso requirido!',
+            statusCode: 401
+        })
+    } else {
+        let token = authToken.split(' ')[1];
+        req.token = token;
+    }
+
+    jwt.verify(req.token, process.env.SECRET_KEY, (err, decodeToken) => {
+        if (err) {
+            res.status(401).json({
+                message: 'Acesso negado',
+                statusCode: 401
+            });
+            return;
+        }
+        req.usuarioId = decodeToken.id;
+        next();
+    });
+}
+
 apiRouter.get('/clientes', express.json(), function (req, res) {
     knex.select('*').from('clientes')
         .then((clientes) => res.status(200).json(clientes))
@@ -21,7 +47,7 @@ apiRouter.get('/clientes', express.json(), function (req, res) {
         });
 });
 
-apiRouter.get('/clientes/:id_cliente', express.json(), function (req, res) {
+apiRouter.get('/clientes/:id_cliente', checkToken, express.json(), function (req, res) {
     let id_cliente = +req.params.id_cliente;
     knex('clientes')
         .where({ id: id_cliente })
@@ -43,25 +69,24 @@ apiRouter.get('/clientes/:id_cliente', express.json(), function (req, res) {
 });
 
 
-apiRouter.post('/clientes/:id_cliente', express.json(), function (req, res) {
-    let id_cliente = req.params.id_cliente;
+apiRouter.post('/clientes/', checkToken, express.json(), function (req, res) {
     if (validaBody(req, res)) {
         knex('clientes')
             .insert({
-                id: id_cliente,
-                nome: req.body.nome,
+                id: req.body.id,
                 telefone: req.body.telefone,
                 email: req.body.email,
                 sexo: req.body.sexo,
                 estado: req.body.estado,
                 cidade: req.body.cidade
-            }, ['id', 'nome', 'telefone', 'email', 'sexo', 'estado', 'cidade'])
+            }, ['id', 'telefone', 'email', 'sexo', 'estado', 'cidade'])
             .then((cliente) => {
                 res.status(200).json(cliente[0])
             })
             .catch((err) => {
                 res.status(500).json({
-                    message: `Erro ao recuperar os clientes, ${err.message}`
+                    message: `Erro ao recuperar os clientes, ${err.message}`,
+                    statusCode: 500
                 });
             });
     } else {
@@ -70,7 +95,7 @@ apiRouter.post('/clientes/:id_cliente', express.json(), function (req, res) {
 
 });
 
-apiRouter.delete('/clientes/:id_cliente', express.json(), function (req, res) {
+apiRouter.delete('/clientes/:id_cliente', checkToken, express.json(), function (req, res) {
     let id_cliente = +req.params.id_cliente;
     knex('clientes')
         .where({ id: id_cliente })
@@ -78,7 +103,8 @@ apiRouter.delete('/clientes/:id_cliente', express.json(), function (req, res) {
         .then((cliente) => {
             if (cliente >= 1) {
                 res.status(200).json({
-                    message: 'cliente deletado!'
+                    message: 'cliente deletado!',
+                    statusCode: 200
                 });
             } else {
                 res.status(404).json({
@@ -89,36 +115,41 @@ apiRouter.delete('/clientes/:id_cliente', express.json(), function (req, res) {
         })
         .catch((err) => {
             res.status(500).json({
-                message: `Erro ao recuperar os clientes, ${err.message}`
+                message: `Erro ao recuperar os clientes, ${err.message}`,
+                statusCode: 500
             });
         });
 });
 
-apiRouter.put('/clientes/:id_cliente', express.json(), function (req, res) {
+apiRouter.put('/clientes/:id_cliente', checkToken, express.json(), function (req, res) {
     let id_cliente = +req.params.id_cliente;
     if (validaBody(req, res)) {
         knex('clientes')
             .where({ id: id_cliente })
             .update({
-                nome: req.body.nome,
                 telefone: req.body.telefone,
                 email: req.body.email,
                 sexo: req.body.sexo,
                 estado: req.body.estado,
                 cidade: req.body.cidade
-            }, ['id', 'nome', 'telefone', 'email', 'sexo', 'estado', 'cidade'])
+            }, ['telefone', 'email', 'sexo', 'estado', 'cidade'])
             .then((cliente) => {
                 if (cliente.length > 0) {
-                    res.status(204).json({});
+                    res.status(200).json({
+                        message: 'dados alterados com sucesso!',
+                        statusCode: 200
+                    });
                 } else {
                     res.status(404).json({
-                        message: 'cliente não encontrado!'
+                        message: 'cliente não encontrado!',
+                        statusCode: 404
                     });
                 }
             })
             .catch((err) => {
                 res.status(500).json({
-                    message: `Erro ao recuperar os clientes, ${err.message}`
+                    message: `Erro ao recuperar os clientes, ${err.message}`,
+                    statusCode: 500
                 });
             });
     } else {
@@ -127,10 +158,7 @@ apiRouter.put('/clientes/:id_cliente', express.json(), function (req, res) {
 });
 
 function validaBody(req, res) {
-    if (!req.body.nome) {
-        returnError400(res, 'nome');
-        return false;
-    } else if (!req.body.telefone) {
+    if (!req.body.telefone) {
         returnError400(res, 'telefone');
         return false;
     } else if (!req.body.email) {

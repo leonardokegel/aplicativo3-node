@@ -12,7 +12,7 @@
     justify-content: space-around;
     border: 1px solid black;
     border-radius: 1rem;
-    width: 700px;
+    width: 800px;
     min-height: 560px;
     margin: 120px auto;
 }
@@ -32,6 +32,7 @@ h1 {
     font-size: 48px;
     color: #010d2e;
     padding: 16px 0 32px 0;
+    text-align: center;
 }
 
 input:not([type="checkbox"]) {

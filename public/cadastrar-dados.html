@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeJS</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="main.js"></script>
+</head>
+
+<body>
+    <section class="login">
+        <div>
+            <img src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png">
+        </div>
+        <div class="main__content">
+            <div>
+                <h1>Cadastrar Dados</h1>
+            </div>
+            <form>
+                <div style="text-align: center;">
+                    <div class="mb-s">
+                        <input id="tel" type="tel" name="tel" placeholder="telefone" required>
+                    </div>
+                    <div class="mb-s">
+                        <input id="email" type="email" name="email" placeholder="email" required>
+                    </div>
+                    <div class="mb-s">
+                        <input id="sexo" type="text" name="sexo" placeholder="sexo" required>
+                    </div>
+                    <div class="mb-s">
+                        <input id="estado" type="text" name="estado" placeholder="estado" required>
+                    </div>
+                    <div class="mb-m">
+                        <input id="cidade" type="text" name="cidade" placeholder="cidade" required>
+                    </div>
+                    <div style="width: 12rem; margin-left: 6rem;">
+                        <button onclick="onClickCadastrarDados()" type="button">Cadastrar Dados</button>
+                    </div>
+                    <p style="color: green; text-align: center" id="mensagemSucesso"></p>
+                    <p style="color: red; text-align: center" id="mensagemErro"></p>
+                </div>
+
+            </form>
+            <div id="goto" class="links">
+                <h3>Ir para</h3>
+                <a style="padding-left: 1rem; text-decoration: underline; color: blue; font-weight: bold;"
+                    href="/home">Login</a>
+            </div>
+        </div>
+
+    </section>
+
+</body>
+
+</html>
