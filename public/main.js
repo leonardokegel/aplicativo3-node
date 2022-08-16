@@ -7,7 +7,7 @@ function onClickLogar() {
     let senha = document.getElementById('senhaHome').value;
 
     if (login && senha) {
-        fetch('http://localhost:3000/sec/login', {
+        fetch('https://pwn-lkpt-aplicativo3.herokuapp.com/sec/login', {
             method: 'POST',
             body: JSON.stringify({
                 login,
@@ -42,7 +42,7 @@ function onClickCadastrar() {
     let nome = document.getElementById('nome').value;
 
     if (login && senha && nome) {
-        fetch('http://localhost:3000/sec/register', {
+        fetch('https://pwn-lkpt-aplicativo3.herokuapp.com/sec/register', {
             method: 'POST',
             body: JSON.stringify({
                 login,
@@ -86,7 +86,7 @@ function onClickCadastrarDados() {
 
         if (telefone && email && sexo && estado && cidade) {
             console.log(dadosSessao.id)
-            fetch(`http://localhost:3000/clientes/v1/clientes/`, {
+            fetch(`https://pwn-lkpt-aplicativo3.herokuapp.com/clientes/v1/clientes/`, {
                 method: 'POST',
                 body: JSON.stringify({
                     id: dadosSessao.id,
@@ -138,7 +138,7 @@ function carregarConsulta() {
     const dadosSessao = JSON.parse(localStorage.getItem('dadosSessao'));
     if (dadosSessao) {
         document.getElementById('boas-vindas').innerHTML = `Olá, ${dadosSessao.nome}!`
-        fetch(`http://localhost:3000/clientes/v1/clientes/${dadosSessao.id}`, {
+        fetch(`https://pwn-lkpt-aplicativo3.herokuapp.com/clientes/v1/clientes/${dadosSessao.id}`, {
             method: 'GET',
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
@@ -208,7 +208,7 @@ function excluirDados() {
     const dadosSessao = JSON.parse(localStorage.getItem('dadosSessao'));
 
     if (dadosSessao) {
-        fetch(`http://localhost:3000/clientes/v1/clientes/${dadosSessao.id}`, {
+        fetch(`https://pwn-lkpt-aplicativo3.herokuapp.com/clientes/v1/clientes/${dadosSessao.id}`, {
             method: 'DELETE',
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
@@ -252,7 +252,7 @@ function onClickAtualizarDados() {
         let cidade = document.getElementById('cidade').value;
 
         if (telefone && email && sexo && estado && cidade) {
-            fetch(`http://localhost:3000/clientes/v1/clientes/${dadosSessao.id}`, {
+            fetch(`https://pwn-lkpt-aplicativo3.herokuapp.com/clientes/v1/clientes/${dadosSessao.id}`, {
                 method: 'PUT',
                 body: JSON.stringify({
                     telefone,
